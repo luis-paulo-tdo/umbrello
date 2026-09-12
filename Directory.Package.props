@@ -1,0 +1,11 @@
+<Project>
+
+	<PropertyGroup>
+		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+		<CentralPackageTransitivePinningEnable>true</CentralPackageTransitivePinningEnable>
+	</PropertyGroup>
+	
+	<ItemGroup>
+	</ItemGroup>
+
+</Project>
