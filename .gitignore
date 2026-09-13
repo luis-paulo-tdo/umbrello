@@ -55,3 +55,34 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# IDEs
+.vs/
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.user
+*.suo
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+npm-debug.log*
+.nx/
+
+# Testes e cobertura
+[Tt]est[Rr]esults/
+coverage/
+*.coverage
+*.trx
+
+# Segredos e ambiente local
+*.local.json
+appsettings.*.Local.json
+.env
+.env.*
+!.env.example
+
+# Aspire / containers
+.aspire/
