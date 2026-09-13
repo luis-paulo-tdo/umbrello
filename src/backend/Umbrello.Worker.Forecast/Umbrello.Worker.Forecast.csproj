@@ -4,7 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>dotnet-Umbrello.Forecast-c06796a0-4e09-4b1a-83d3-84437b51e91a</UserSecretsId>
+    <UserSecretsId>dotnet-Umbrello.Worker.Forecast-eea81aa5-dd36-4ef4-b635-58d67ec06c97</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

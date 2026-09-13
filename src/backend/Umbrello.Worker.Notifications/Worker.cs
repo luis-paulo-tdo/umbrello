@@ -1,4 +1,4 @@
-namespace Umbrello.Notifications;
+namespace Umbrello.Worker.Notifications;
 
 public class Worker(ILogger<Worker> logger) : BackgroundService
 {

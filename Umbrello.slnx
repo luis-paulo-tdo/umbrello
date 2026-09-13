@@ -5,12 +5,12 @@
     <Project Path="src/backend/Umbrello.Application/Umbrello.Application.csproj" />
     <Project Path="src/backend/Umbrello.Contracts/Umbrello.Contracts.csproj" />
     <Project Path="src/backend/Umbrello.Domain/Umbrello.Domain.csproj" />
-    <Project Path="src/backend/Umbrello.Forecast/Umbrello.Forecast.csproj" />
     <Project Path="src/backend/Umbrello.Infrastructure/Umbrello.Infrastructure.csproj" />
     <Project Path="src/backend/Umbrello.Messaging.RabbitMq/Umbrello.Messaging.RabbitMq.csproj" />
     <Project Path="src/backend/Umbrello.MigrationService/Umbrello.MigrationService.csproj" />
-    <Project Path="src/backend/Umbrello.Notifications/Umbrello.Notifications.csproj" />
     <Project Path="src/backend/Umbrello.Scheduler/Umbrello.Scheduler.csproj" />
+    <Project Path="src/backend/Umbrello.Worker.Forecast/Umbrello.Worker.Forecast.csproj" />
+    <Project Path="src/backend/Umbrello.Worker.Notifications/Umbrello.Worker.Notifications.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Umbrello.Api.IntegrationTests/Umbrello.Api.IntegrationTests.csproj" />

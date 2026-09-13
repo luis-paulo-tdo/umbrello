@@ -1,4 +1,4 @@
-using Umbrello.Notifications;
+using Umbrello.Worker.Forecast;
 
 var builder = Host.CreateApplicationBuilder(args);
 builder.Services.AddHostedService<Worker>();

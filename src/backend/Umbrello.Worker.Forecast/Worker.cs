@@ -1,4 +1,4 @@
-namespace Umbrello.Forecast;
+namespace Umbrello.Worker.Forecast;
 
 public class Worker(ILogger<Worker> logger) : BackgroundService
 {
