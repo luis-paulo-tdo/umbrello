@@ -1,0 +1,6 @@
+@Umbrello.Api_HostAddress = http://localhost:5252
+
+GET {{Umbrello.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
