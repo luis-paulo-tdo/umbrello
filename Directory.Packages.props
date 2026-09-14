@@ -5,7 +5,16 @@
 		<CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
 	</PropertyGroup>
 	
-	<ItemGroup>
+	<ItemGroup Label="ASP.NET Core">
+		<PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.11" />
+	</ItemGroup>
+	
+	<ItemGroup Label="Hosting">
+		<PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.11" />
+	</ItemGroup>
+	
+	<ItemGroup Label="Testes">
+		<PackageVersion Include="xunit.v3.mtp-v2" Version="4.0.1" />
 	</ItemGroup>
 
 </Project>
