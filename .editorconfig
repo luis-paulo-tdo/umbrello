@@ -43,6 +43,15 @@ dotnet_naming_symbols.interface_symbol.applicable_kinds = interface
 dotnet_naming_style.prefix_i_style.required_prefix = I
 dotnet_naming_style.prefix_i_style.capitalization = pascal_case
 
+# Nomenclatura: private static readonly em PascalCase (são constantes na prática)
+dotnet_naming_rule.private_static_readonly_pascal.severity = warning
+dotnet_naming_rule.private_static_readonly_pascal.symbols = private_static_readonly_field
+dotnet_naming_rule.private_static_readonly_pascal.style = pascal_style
+dotnet_naming_symbols.private_static_readonly_field.applicable_kinds = field
+dotnet_naming_symbols.private_static_readonly_field.applicable_accessibilities = private
+dotnet_naming_symbols.private_static_readonly_field.required_modifiers = static,readonly
+dotnet_naming_style.pascal_style.capitalization = pascal_case
+
 # Nomenclatura: campos privados com _
 dotnet_naming_rule.private_fields_underscore.severity = warning
 dotnet_naming_rule.private_fields_underscore.symbols = private_field_symbol
