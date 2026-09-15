@@ -60,3 +60,7 @@ dotnet_naming_symbols.private_field_symbol.applicable_kinds = field
 dotnet_naming_symbols.private_field_symbol.applicable_accessibilities = private
 dotnet_naming_style.underscore_camel_style.required_prefix = _
 dotnet_naming_style.underscore_camel_style.capitalization = camel_case
+
+# Projetos de teste: nomes no padrão Metodo_Cenario_ResultadoEsperado
+[tests/**/*.cs]
+dotnet_diagnostic.CA1707.severity = none
