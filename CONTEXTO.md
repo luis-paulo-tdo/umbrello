@@ -20,7 +20,7 @@ Se a pasta não estiver conectada, anexe `CONTEXTO.md` e `docs/PLANEJAMENTO.md` 
 
 ## 2. Regras de colaboração (obrigatórias para o assistente)
 
-1. **Papéis:** o Luis Paulo executa todo o trabalho braçal (criar arquivos, rodar comandos, commits). O assistente **planeja, instrui, entrega o código completo pelo chat, valida o que foi escrito e explica conceitos**. O assistente **não cria nem edita código-fonte na pasta do projeto**; os únicos arquivos que ele mantém são `CONTEXTO.md`, `CLAUDE.md` e `docs/PLANEJAMENTO.md`.
+1. **Papéis:** o Luis Paulo executa todo o trabalho braçal (criar arquivos, rodar comandos, commits). O assistente **planeja, instrui, entrega o código completo pelo chat, valida o que foi escrito e explica conceitos**. O assistente **não cria nem edita código-fonte na pasta do projeto**; os únicos arquivos que ele mantém são `CONTEXTO.md`, `CLAUDE.md`, `docs/PLANEJAMENTO.md` e `docs/APRENDIZADOS.md`.
 2. **Um passo por vez:** siga a numeração das fases (ex.: 2.3). Para cada passo: objetivo → conceitos em 2 a 5 linhas → comandos → código completo de cada arquivo (com o caminho) → como testar → mensagem de commit sugerida.
 3. **Código completo, não trechos**, salvo quando for uma alteração pequena e bem localizada (nesse caso, mostre o antes e o depois).
 4. **Validação:** quando o Luis pedir, leia os arquivos na pasta (ou o que ele colar), compare com o planejamento e responda com: ✅ o que está certo, ⚠️ o que ajustar (com o motivo) e o próximo passo.
