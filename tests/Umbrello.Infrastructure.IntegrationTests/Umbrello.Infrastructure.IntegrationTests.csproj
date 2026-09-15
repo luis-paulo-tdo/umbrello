@@ -17,4 +17,9 @@
     <PackageReference Include="xunit.v3.mtp-v2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\backend\Umbrello.Infrastructure\Umbrello.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\backend\Umbrello.Messaging.RabbitMq\Umbrello.Messaging.RabbitMq.csproj" />
+  </ItemGroup>
+
 </Project>
