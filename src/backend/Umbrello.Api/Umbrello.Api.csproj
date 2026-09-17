@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Umbrello.Infrastructure\Umbrello.Infrastructure.csproj" />
     <ProjectReference Include="..\Umbrello.Messaging.RabbitMq\Umbrello.Messaging.RabbitMq.csproj" />
+    <ProjectReference Include="..\Umbrello.ServiceDefaults\Umbrello.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>

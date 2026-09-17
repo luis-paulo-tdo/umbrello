@@ -10,5 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Umbrello.Infrastructure\Umbrello.Infrastructure.csproj" />
+    <ProjectReference Include="..\Umbrello.ServiceDefaults\Umbrello.ServiceDefaults.csproj" />
   </ItemGroup>
 </Project>

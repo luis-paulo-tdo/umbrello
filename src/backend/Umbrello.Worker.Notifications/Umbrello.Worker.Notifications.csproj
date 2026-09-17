@@ -5,11 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Hosting"/>
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Umbrello.Infrastructure\Umbrello.Infrastructure.csproj" />
     <ProjectReference Include="..\Umbrello.Messaging.RabbitMq\Umbrello.Messaging.RabbitMq.csproj" />
+    <ProjectReference Include="..\Umbrello.ServiceDefaults\Umbrello.ServiceDefaults.csproj" />
   </ItemGroup>
 </Project>
