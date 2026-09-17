@@ -15,7 +15,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.Map("/", () => Results.Ok(new { service = "Umbrello.Api " }));
+app.MapGet("/", () => Results.Ok(new { service = "Umbrello.Api " }));
 
 app.Run();
 
