@@ -2,13 +2,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
-namespace Umbrello.ServiceDefaults;
+namespace Microsoft.Extensions.Hosting;
 
 /// <summary>
 /// Configurações compartilhadas por todos os hosts: telemetria, health checks, service discovery e resiliência padrão em HttpClient.
