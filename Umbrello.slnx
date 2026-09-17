@@ -20,4 +20,5 @@
     <Project Path="tests/Umbrello.Domain.Tests/Umbrello.Domain.Tests.csproj" />
     <Project Path="tests/Umbrello.Infrastructure.IntegrationTests/Umbrello.Infrastructure.IntegrationTests.csproj" />
   </Folder>
+  <Project Path="Umbrello.AppHost/Umbrello.AppHost.csproj" />
 </Solution>
