@@ -9,4 +9,10 @@
     <UserSecretsId>f446c6d6-ec7d-49ce-aca8-3174bc9b4204</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.RabbitMQ" />
+    <PackageReference Include="Aspire.Hosting.SqlServer" />
+    <PackageReference Include="CommunityToolkit.Aspire.Hosting.MailPit" />
+  </ItemGroup>
+
 </Project>
