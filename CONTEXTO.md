@@ -82,7 +82,7 @@ Retry: exchanges fanout `umbrello.retry.10s|1m|5m` com filas TTL → default exc
 
 | Fase | Nome | Status |
 |---|---|---|
-| 0 | Ambiente e fundação do repositório | ⏳ Em andamento (0.1 ✅ · 0.3 ✅ · 0.4 ✅) |
+| 0 | Ambiente e fundação do repositório | ⏳ Em andamento (0.1 ✅ · 0.3 ✅ · 0.4 ✅ · 0.5 ✅) |
 | 1 | Aspire, ServiceDefaults e infraestrutura local | ⬜ |
 | 2 | Domínio e persistência | ⬜ |
 | 3 | Autenticação | ⬜ |
@@ -104,11 +104,11 @@ Legenda: ⬜ não iniciada · ⏳ próxima/em andamento · ✅ concluída
 
 ## 6. Próximo passo
 
-**Fase 0 → Passo 0.5 (em andamento):** testes de arquitetura em `Umbrello.Architecture.Tests` com NetArchTest.Rules + marcadores `AssemblyReference` em cada camada.
+**Fase 0 → Passo 0.6 (último da fase):** criar `docs/adr/0001-arquitetura.md` e `docs/adr/0002-mensageria-sem-masstransit.md` (conteúdo entregue pelo assistente na sessão 1).
 
-Depois: **0.6** (ADRs 0001 e 0002) e então a **Fase 1** (Aspire).
+Depois: **Fase 1** — Aspire (ServiceDefaults, AppHost com SQL Server, RabbitMQ e Mailpit, API com health checks).
 
-Concluídos: 0.1 (ambiente), 0.3 (fundação do repositório), 0.4 (solução `Umbrello.slnx`, 10 projetos de src + 5 de teste, referências entre camadas, build limpo). **0.2 (API key da OpenWeatherMap) segue pendente** — confirmar se já ativou.
+Concluídos na Fase 0: 0.1 ambiente · 0.3 fundação do repositório · 0.4 solução e projetos · 0.5 testes de arquitetura (7 testes verdes). **0.2 (API key da OpenWeatherMap) continua pendente** — necessária na Fase 4.
 
 ---
 
@@ -126,8 +126,11 @@ Concluídos: 0.1 (ambiente), 0.3 (fundação do repositório), 0.4 (solução `U
 - Remoto: `https://github.com/luis-paulo-tdo/umbrello` · branch `main`
 - Conteúdo atual: `README.md`, `.gitignore`, `CONTEXTO.md`, `CLAUDE.md`, `docs/PLANEJAMENTO.md`, `docs/APRENDIZADOS.md`
 - Solução `Umbrello.slnx` com 10 projetos em `src/backend` e 5 em `tests`, referências entre camadas conforme a seção 6.4 do planejamento. Build limpo (sem warnings).
-- Pacotes já no `Directory.Packages.props`: `Microsoft.AspNetCore.OpenApi` 10.0.11, `Microsoft.Extensions.Hosting` 10.0.11, `xunit.v3.mtp-v2` 4.0.1.
+- Pacotes já no `Directory.Packages.props`: `Microsoft.AspNetCore.OpenApi` 10.0.11, `Microsoft.Extensions.Hosting` 10.0.11, `xunit.v3.mtp-v2` 4.0.1, `NetArchTest.Rules` 1.3.2.
+- `tests/Umbrello.Architecture.Tests`: 7 regras de dependência entre camadas, todas verdes. Marcadores `AssemblyReference` existem em Domain, Contracts, Application, Infrastructure e Messaging.RabbitMq (servem também para varredura de assembly na DI).
 - Testes: **xUnit v3 sobre Microsoft Testing Platform** (template `xunit3` do pacote `xunit.v3.templates`; cada projeto de teste é um executável, `OutputType=Exe`). Enquanto um projeto de teste não tiver nenhum teste, o `dotnet test` retorna código 8 ("zero testes") — normal até a Fase 2.
+- `.editorconfig`: `CA1707` desligada só em `[tests/**/*.cs]` (nomes de teste no padrão `Metodo_Cenario_ResultadoEsperado`). Para exceções de propriedades MSBuild em testes, usar `tests/Directory.Build.props` **com** `<Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />`, senão os projetos perdem tudo que vem da raiz.
+- Atenção a colisões de `global using`: `<Using Include="Xunit" />` + NetArchTest deixam `TestResult` ambíguo (CS0104). Nos testes de arquitetura, o helper recebe `IEnumerable<string>?` em vez de `TestResult`.
 - Convenção de nomenclatura: campo de instância privado `_camelCase`; `private static readonly` e `const` em `PascalCase` (regra específica adicionada ao `.editorconfig` **antes** da regra genérica de campo privado, porque o Roslyn aplica a primeira que casar).
 - `AnalysisLevel=latest-recommended` + `TreatWarningsAsErrors` valem desde o começo: CA1848 (usar `[LoggerMessage]` em vez de `LogInformation` direto), CA1727 (placeholders em PascalCase) e CA1852 (`sealed`) já apareceram e o código de exemplo dos templates foi removido.
 
@@ -148,4 +151,4 @@ Concluídos: 0.1 (ambiente), 0.3 (fundação do repositório), 0.4 (solução `U
 
 | Sessão | Data | O que foi feito |
 |---|---|---|
-| 1 | 11/09/2026 | Levantamento de versões atuais; decisões D01–D16; criação do `docs/PLANEJAMENTO.md` (arquitetura, topologia, modelo de dados, API, front, padrões, testes, roadmap de 15 fases) e deste arquivo. D01 revisada: **.NET 11 RC1 → .NET 10 LTS**. SDKs na máquina: 8.0.404, 10.0.302, 10.0.400. Passos 0.1, 0.3 e 0.4 concluídos: ambiente conferido, fundação do repositório e scaffold da solução com build limpo. |
+| 1 | 11/09/2026 | Levantamento de versões atuais; decisões D01–D16; criação do `docs/PLANEJAMENTO.md` (arquitetura, topologia, modelo de dados, API, front, padrões, testes, roadmap de 15 fases) e deste arquivo. D01 revisada: **.NET 11 RC1 → .NET 10 LTS**. SDKs na máquina: 8.0.404, 10.0.302, 10.0.400. Passos 0.1, 0.3, 0.4 e 0.5 concluídos: ambiente conferido, fundação do repositório, scaffold da solução com build limpo e testes de arquitetura verdes. Criado `docs/APRENDIZADOS.md` (regra 10). |
