@@ -9,6 +9,7 @@
     <Project Path="src/backend/Umbrello.Messaging.RabbitMq/Umbrello.Messaging.RabbitMq.csproj" />
     <Project Path="src/backend/Umbrello.MigrationService/Umbrello.MigrationService.csproj" />
     <Project Path="src/backend/Umbrello.Scheduler/Umbrello.Scheduler.csproj" />
+    <Project Path="src/backend/Umbrello.ServiceDefaults/Umbrello.ServiceDefaults.csproj" />
     <Project Path="src/backend/Umbrello.Worker.Forecast/Umbrello.Worker.Forecast.csproj" />
     <Project Path="src/backend/Umbrello.Worker.Notifications/Umbrello.Worker.Notifications.csproj" />
   </Folder>
