@@ -1,6 +1,6 @@
 # ADR 0001 — Clean Architecture em monólito modular distribuído em processos
 
-- **Status:** aceita
+- **Status:** Aceita
 - **Data:** 15/09/2026
 - **Decisores:** Luis Paulo
 
