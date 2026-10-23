@@ -19,6 +19,10 @@ trim_trailing_whitespace = false
 dotnet_sort_system_directives_first = true
 dotnet_separate_import_directive_groups = false
 csharp_using_directive_placement = outside_namespace:warning
+# CA1716: nomes que colidem com palavras-chave de VB.NET.
+# O Umbrello não é consumido por VB, e a regra barra nomes idiomáticos
+# do domínio (Error, Next, Stop, Event, To, From).
+dotnet_diagnostic.CA1716.severity = none
 
 # C# moderno
 csharp_style_namespace_declarations = file_scoped:warning
