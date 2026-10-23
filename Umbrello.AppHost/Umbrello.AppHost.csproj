@@ -15,4 +15,12 @@
     <PackageReference Include="CommunityToolkit.Aspire.Hosting.MailPit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\src\backend\Umbrello.Api\Umbrello.Api.csproj" />
+    <ProjectReference Include="..\src\backend\Umbrello.Scheduler\Umbrello.Scheduler.csproj" />
+    <ProjectReference Include="..\src\backend\Umbrello.Worker.Forecast\Umbrello.Worker.Forecast.csproj" />
+    <ProjectReference Include="..\src\backend\Umbrello.Worker.Notifications\Umbrello.Worker.Notifications.csproj" />
+    <ProjectReference Include="..\src\backend\Umbrello.MigrationService\Umbrello.MigrationService.csproj" />
+  </ItemGroup>
+
 </Project>

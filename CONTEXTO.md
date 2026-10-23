@@ -129,8 +129,10 @@ Depois: **1.3** API com health checks visíveis no dashboard e **1.4** registro 
 
 - [ ] Confirmar a API exata do Aspire 13.5 para hospedar o Angular (`AddJavaScriptApp` x `AddViteApp`) na Fase 1/6.
 - [ ] As versões dos pacotes NuGet entram no `Directory.Packages.props` via `dotnet add package` a cada fase (CPM), para não fixar versões inventadas.
-- [ ] Confirmar os nomes de pacote do ArchUnitNET compatíveis com xUnit v3 na Fase 0.
-- [ ] Criar a API key da OWM cedo (a ativação pode demorar).
+- [ ] **Criar/ativar a API key da OpenWeatherMap** (passo 0.2, ainda pendente) — necessária no 1.2 (`user-secrets`) e na Fase 4.
+- [ ] Validar a tag `2025-latest` do SQL Server (`docker pull mcr.microsoft.com/mssql/server:2025-latest`) antes de usá-la no AppHost; a imagem padrão do Aspire é `2022-latest`.
+- [ ] `dotnet test` na solução inteira retorna código 8 ("zero testes") enquanto houver projeto de teste vazio — normal até a Fase 3. Rodar por projeto: `dotnet test tests\Umbrello.Architecture.Tests`.
+- [x] ~~ArchUnitNET com xUnit v3~~ — resolvido: usamos **NetArchTest.Rules** 1.3.2, que não se acopla a framework de teste.
 
 ---
 
