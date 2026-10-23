@@ -1,7 +1,7 @@
 # CONTEXTO — Umbrello (pair programming com Claude)
 
 > **Leia este arquivo inteiro antes de qualquer resposta.** Depois leia a seção da fase atual em [`docs/PLANEJAMENTO.md`](docs/PLANEJAMENTO.md).
-> Última atualização: **17/09/2026** · fim da Sessão 1
+> Última atualização: **23/10/2026** · Sessão 2
 
 ---
 
@@ -75,6 +75,7 @@ Retry: exchanges fanout `umbrello.retry.10s|1m|5m` com filas TTL → default exc
 | D14 | 11/09/2026 | Previsão = **próximas 24 h** em períodos (Madrugada/Manhã/Tarde/Noite) no fuso da cidade | Evita ambiguidade de "dia" quando usuário e cidade estão em fusos diferentes |
 | D15 | 11/09/2026 | E-mail com **template Razor via `HtmlRenderer`** + MailKit; Mailpit em dev | Primeira parte (first-party), gratuito e tipado |
 | D16 | 11/09/2026 | Código em inglês, docs em PT-BR, Conventional Commits, branch por fase `feat/fase-XX-nome` | Padrão de mercado |
+| D17 | 23/10/2026 | **AppHost fica na raiz** (`Umbrello.AppHost/`), e não em `src/backend/` como o planejamento previa | O `aspire init` não permite escolher o caminho e o `aspire.config.json` da raiz aponta para ele; mover exigiria ajustar configuração e caminhos relativos sem ganho. O AppHost é ponto de entrada de desenvolvimento, não código de aplicação |
 
 ---
 
@@ -83,8 +84,8 @@ Retry: exchanges fanout `umbrello.retry.10s|1m|5m` com filas TTL → default exc
 | Fase | Nome | Status |
 |---|---|---|
 | 0 | Ambiente e fundação do repositório | ✅ Concluída |
-| 1 | Aspire, ServiceDefaults e infraestrutura local | ⏳ Em andamento (1.1 quase pronto) |
-| 2 | Domínio e persistência | ⬜ |
+| 1 | Aspire, ServiceDefaults e infraestrutura local | ✅ Concluída |
+| 2 | Domínio e persistência | ⏳ Em andamento |
 | 3 | Autenticação | ⬜ |
 | 4 | Integração OpenWeatherMap | ⬜ |
 | 5 | Casos de uso: cidades, favoritos, preferências | ⬜ |
@@ -104,24 +105,9 @@ Legenda: ⬜ não iniciada · ⏳ próxima/em andamento · ✅ concluída
 
 ## 6. Próximo passo
 
-**Fase 1 → Passo 1.1 — terminar e validar.** O projeto `Umbrello.ServiceDefaults` já existe, com `Extensions.cs` (OpenTelemetry, health checks, service discovery, resiliência padrão) e os pacotes instalados. Falta confirmar:
+**Fase 2 → Passo 2.1 (em andamento):** blocos base do domínio em `src/backend/Umbrello.Domain/Abstractions/` — `Entity<TId>`, `AggregateRoot<TId>`, `IDomainEvent`, `ValueObject`, `Result`/`Result<T>` e `Error` — mais os primeiros testes em `Umbrello.Domain.Tests` (pacote Shouldly).
 
-1. Os cinco hosts (`Api`, `Scheduler`, `Worker.Forecast`, `Worker.Notifications`, `MigrationService`) referenciam `Umbrello.ServiceDefaults`.
-2. Os `Program.cs` dos quatro workers chamam `builder.AddServiceDefaults();`.
-3. O `Program.cs` da Api chama `builder.AddServiceDefaults();` e `app.MapDefaultEndpoints();`.
-4. `dotnet build` limpo e `dotnet run --project src\backend\Umbrello.Api` respondendo em `/health` e `/alive`.
-5. Commit em `feat/fase-01-aspire`: `feat: add service defaults with telemetry and health checks`.
-
-**Depois, Passo 1.2 — AppHost do Aspire.** Comandos e APIs já pesquisados e confirmados na documentação da Aspire 13.5:
-
-- `aspire init` na raiz: como existe `Umbrello.slnx`, cria um AppHost **baseado em projeto** (`AppHost.csproj`) mais o `aspire.config.json`. Não cria ServiceDefaults (por isso ele foi escrito à mão no 1.1).
-- `aspire add communitytoolkit-mailpit` para o Mailpit (`CommunityToolkit.Aspire.Hosting.MailPit`), API `builder.AddMailPit("mailpit", httpPort: 8025, smtpPort: 1025)`; endpoints `smtp` e `http`; `.WithDataVolume("mailpit-data")` opcional.
-- SQL Server (`Aspire.Hosting.SqlServer`): `builder.AddSqlServer("sql").WithLifetime(ContainerLifetime.Persistent).WithDataVolume()` + `.AddDatabase("umbrellodb")`. **A imagem padrão é `2022-latest`** — para o SQL Server 2025 (tipo `json` nativo, D03) é preciso `.WithImageTag("2025-latest")`; validar com `docker pull mcr.microsoft.com/mssql/server:2025-latest` antes.
-- RabbitMQ (`Aspire.Hosting.RabbitMQ`): `builder.AddRabbitMQ("rabbitmq").WithManagementPlugin().WithDataVolume()`; imagem padrão já é `rabbitmq:4.3`. **Atenção:** o RabbitMQ 4.3 rejeita declaração de fila não durável e não exclusiva com erro AMQP 541 — nossas filas são quorum, então tudo bem, mas vale lembrar na Fase 7.
-- Chave da OWM como parâmetro secreto: `builder.AddParameter("owm-api-key", secret: true)` + `dotnet user-secrets` (passo 0.2, ainda pendente).
-- Projetos entram no AppHost com `dotnet add <AppHost> reference <projeto>` e depois `builder.AddProject<Projects.Umbrello_Api>("api")`; ordem com `WaitFor` / `WaitForCompletion(migrator)`; réplicas com `WithReplicas(2)` (útil na Fase 9).
-
-Depois: **1.3** API com health checks visíveis no dashboard e **1.4** registro dos demais hosts.
+Depois, na ordem da Fase 2 do planejamento: **2.2** value objects (`Coordinates`, `Preferences`, `Units`, `TimeZoneId`), **2.3** aggregates (`Subscriber` + `FavoriteCity`, `City`, `DailyDispatch` com máquina de estados, `Notification`, `ForecastHistory`), **2.4** `NextDispatchCalculator` com TDD (horário de verão e virada de dia), **2.5** `UmbrelloDbContext` e configurações, **2.6** outbox/inbox + script do Quartz, **2.7** `MigrationService` aplicando as migrations (aí sim o AppHost passa a usar `WaitForCompletion(migrator)`).
 
 ---
 
@@ -129,10 +115,8 @@ Depois: **1.3** API com health checks visíveis no dashboard e **1.4** registro 
 
 - [ ] Confirmar a API exata do Aspire 13.5 para hospedar o Angular (`AddJavaScriptApp` x `AddViteApp`) na Fase 1/6.
 - [ ] As versões dos pacotes NuGet entram no `Directory.Packages.props` via `dotnet add package` a cada fase (CPM), para não fixar versões inventadas.
-- [ ] **Criar/ativar a API key da OpenWeatherMap** (passo 0.2, ainda pendente) — necessária no 1.2 (`user-secrets`) e na Fase 4.
-- [ ] Validar a tag `2025-latest` do SQL Server (`docker pull mcr.microsoft.com/mssql/server:2025-latest`) antes de usá-la no AppHost; a imagem padrão do Aspire é `2022-latest`.
-- [ ] `dotnet test` na solução inteira retorna código 8 ("zero testes") enquanto houver projeto de teste vazio — normal até a Fase 3. Rodar por projeto: `dotnet test tests\Umbrello.Architecture.Tests`.
-- [x] ~~ArchUnitNET com xUnit v3~~ — resolvido: usamos **NetArchTest.Rules** 1.3.2, que não se acopla a framework de teste.
+- [ ] Confirmar os nomes de pacote do ArchUnitNET compatíveis com xUnit v3 na Fase 0.
+- [ ] Criar a API key da OWM cedo (a ativação pode demorar).
 
 ---
 
@@ -142,6 +126,10 @@ Depois: **1.3** API com health checks visíveis no dashboard e **1.4** registro 
 - Conteúdo atual: `README.md`, `.gitignore`, `CONTEXTO.md`, `CLAUDE.md`, `docs/PLANEJAMENTO.md`, `docs/APRENDIZADOS.md`
 - `docs/adr/`: ADR 0001 (arquitetura) e ADR 0002 (mensageria sem MassTransit) escritos, com índice em `docs/adr/README.md`.
 - Solução `Umbrello.slnx` com 10 projetos em `src/backend` e 5 em `tests`, referências entre camadas conforme a seção 6.4 do planejamento. Build limpo (sem warnings).
+- `Umbrello.AppHost/` **na raiz** (decisão D17), arquivo `AppHost.cs`: orquestra SQL Server 2025 (`WithImageTag("2025-latest")`, lifetime persistente, volume), banco `umbrellodb`, RabbitMQ 4.3 com management, Mailpit, parâmetro secreto `owm-api-key` e os 5 projetos. `aspire run` validado: 5 projetos + 3 containers saudáveis, `/health` respondendo e traces aparecendo no dashboard.
+- `AppHost.cs` precisa de `using Aspire.Hosting.ApplicationModel;` para `ContainerLifetime` (não vem nos implicit usings do SDK).
+- Portas de container são sorteadas pelo Aspire; só as UIs (RabbitMQ 15672, Mailpit 8025) foram fixadas. Nenhum serviço usa número de porta — tudo vem por connection string injetada via `WithReference`.
+- Chave da OWM no `user-secrets` do AppHost, em `Parameters:owm-api-key`.
 - `src/backend/Umbrello.ServiceDefaults`: criado, com `Extensions.cs` (AddServiceDefaults, ConfigureOpenTelemetry, AddDefaultHealthChecks, MapDefaultEndpoints) e `FrameworkReference` de `Microsoft.AspNetCore.App`.
 - Pacotes no `Directory.Packages.props`: `Microsoft.AspNetCore.OpenApi` 10.0.11 · `Microsoft.Extensions.Hosting` 10.0.11 · `xunit.v3.mtp-v2` 4.0.1 · `NetArchTest.Rules` 1.3.2 · `Microsoft.Extensions.Http.Resilience` 10.10.0 · `Microsoft.Extensions.ServiceDiscovery` 10.10.0 · `OpenTelemetry.*` 1.18.0 (Exporter.OpenTelemetryProtocol, Extensions.Hosting, Instrumentation.AspNetCore/Http/Runtime).
 - `tests/Umbrello.Architecture.Tests`: 7 regras de dependência entre camadas, todas verdes. Marcadores `AssemblyReference` existem em Domain, Contracts, Application, Infrastructure e Messaging.RabbitMq (servem também para varredura de assembly na DI).
@@ -169,3 +157,4 @@ Depois: **1.3** API com health checks visíveis no dashboard e **1.4** registro 
 | Sessão | Data | O que foi feito |
 |---|---|---|
 | 1 | 11/09/2026 | Levantamento de versões atuais; decisões D01–D16; criação do `docs/PLANEJAMENTO.md` (arquitetura, topologia, modelo de dados, API, front, padrões, testes, roadmap de 15 fases) e deste arquivo. D01 revisada: **.NET 11 RC1 → .NET 10 LTS**. SDKs na máquina: 8.0.404, 10.0.302, 10.0.400. Passos 0.1, 0.3, 0.4 e 0.5 concluídos: ambiente conferido, fundação do repositório, scaffold da solução com build limpo e testes de arquitetura verdes. Criado `docs/APRENDIZADOS.md` (regra 10). Fase 0 fechada com os ADRs 0001 e 0002. Fase 1 iniciada: `Umbrello.ServiceDefaults` escrito à mão (sem template do Aspire). Aprendizados registrados: A01, A02, A03. |
+| 2 | 23/10/2026 | **Fase 1 concluída**: AppHost criado com `aspire init` (D17, fica na raiz), pacotes de hospedagem, orquestração dos 3 containers e 5 projetos, `aspire run` verde. Início da Fase 2. |
